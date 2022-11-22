@@ -1,0 +1,90 @@
+<form action="/cart/add" method="post" class="js-add-to-cart-form product-form" enctype="multipart/form-data">
+  <div class="price-quantity-row cols-2-sm">
+    <div data-price-wrapper class="price-wrapper">
+      <p class="caps--md">Price</p>
+      <p class="price-wrapper__price">
+        <span class="js-price" data-raw-price="{{ current_variant.price }}" data-product-price>
+          {{ current_variant.price | money_without_trailing_zeros }}
+        </span>
+
+        {% if product.compare_at_price_max > product.price %}
+          <span class="visually-hidden" data-compare-text>{{ 'products.product.regular_price' | t }}</span>
+          <s data-compare-price>
+            {% if current_variant.compare_at_price > current_variant.price %}
+            {{ current_variant.compare_at_price | money_without_trailing_zeros }}
+            {% endif %}
+          </s>
+        {% endif %}
+      </p>
+    </div>
+
+    <div class="quantity-wrap">
+      <label for="quantity" class="caps--md">{{ 'products.product.quantity' | t }}</label>
+      <br>
+      <button type="button" class="text-only" data-method="subtract" disabled>-<span class="visually-hidden">Subtract one</span></button>
+      <input type="number" id="quantity" class="js-quantity" name="quantity" value="1" min="1">
+      <button type="button" class="text-only" data-method="add">+<span class="visually-hidden">Add one</span></button>
+    </div>
+  </div>
+
+  {% unless product.has_only_default_variant %}
+    {% for option in product.options_with_values %}
+
+      <div class="selector-wrapper js visually-hidden">
+        <label for="SingleOptionSelector-{{ forloop.index0 }}" class="visually-hidden">
+          {{ option.name }}
+        </label>
+
+        <select
+          id="SingleOptionSelector-{{ forloop.index0 }}"
+          data-single-option-selector
+          data-index="option{{ option.position }}"
+          class="js-single-option-selector">
+          <option value="" disabled selected>{{ option.name }}</option>
+          {% for value in option.values %}
+            <option
+              value="{{ value | escape }}"
+              {% if option.selected_value == value %}selected="selected"{% endif %}>
+                {{ value }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+    {% endfor %}
+  {% endunless %}
+
+
+  <!-- ====== COLOR SWATCHES (Delete if not needed)======== -->
+  <!-- SEE: https://community.shopify.com/c/Shopify-Design/Product-pages-Add-color-swatches-to-products/td-p/616427 -->
+  {% if product.available and product.variants.size > 1 %}
+    {% render 'swatch' for product.options as swatch %}
+  {% endif %}
+
+  <select name="id" class="js-variant-id visually-hidden no-js" data-product-select>
+    {% for variant in product.variants %}
+      <option
+        {% if variant == current_variant %}selected="selected"{% endif %}
+        {% unless variant.available %}disabled="disabled"{% endunless %}
+        value="{{ variant.id }}">
+          {{ variant.title }}
+      </option>
+    {% endfor %}
+  </select>
+
+  <div>
+    <button
+      type="submit"
+      name="add"
+      class="btn btn--beige"
+      data-add-to-cart
+      {% unless current_variant.available %}disabled="disabled"{% endunless %}>
+        <span data-add-to-cart-text>
+          {% if current_variant.available %}
+            {{ 'products.product.add_to_cart' | t }}
+          {% else %}
+            {{ 'products.product.sold_out' | t }}
+          {% endif %}
+        </span>
+    </button>
+  </div>
+</form>

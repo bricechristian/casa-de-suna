@@ -1,0 +1,51 @@
+
+<div class="collection-content container">
+  <div class="section-header">
+    {% comment %} {% if collection.handle == 'all' %}
+      <h2 class="collection__title hd-3">Categories</h2>
+    {% else %}
+    <h2 class="collection__title hd-3">{{ collection.title | escape }}</h2>
+    {% endif %} {% endcomment %}
+    <h2 class="collection__title hd-3">{{ collection.title | escape }}</h2>
+  
+  </div>
+
+  {%- assign collection = collections[section.settings.collection] -%}
+
+  {%- assign product_limit = section.settings.grid | times: section.settings.rows -%}
+
+  <ul data-section-id="{% if section.id %}{{section.id}}{% endif %}" data-sectionId="{% if section.id %}{{section.id}}{% endif %}" {% if section.blocks %}data-blocks='{ {%- capture blocks_json -%}{% for block in section.blocks %}{%- capture block_json -%}"{{ block.type }}":{{ block.settings | json }}{%- endcapture -%}{{ block_json | prepend: ","  }}{% endfor %}{%- endcapture -%}{{ blocks_json | remove_first: "," }} }' {% endif %} data-settings='{% if section.settings %}{{section.settings | json}}{% endif %}' id="gf-products" class="grid grid--uniform grid--view-items">
+    {% for product in collection.products limit: product_limit %}
+      <li class="grid__item grid__item--{{section.id}} {{ grid_item_width }}">
+        {% render 'product-card', product_card_product: product %}
+      </li>
+    {% endfor %}
+  </ul>
+
+  {% if section.settings.show_view_all %}
+    <hr class="hr--invisible" aria-hidden="true" />
+    <div class="text-center">
+      <a href="{{ collection.url }}" class="btn" aria-label="{{ 'collections.general.view_all_label' | t: collection_name: collection.title }}">
+        {{ 'collections.general.view_all' | t }}
+      </a>
+    </div>
+  {% endif %}
+
+</div>
+
+
+
+
+
+{% schema %}
+{
+  "name": "Collection Page",
+  "class": "collection-page",
+  "presets": [
+    {
+      "name": "Homepage Collection",
+      "category": "Collection"
+    }
+  ]
+}
+{% endschema %}

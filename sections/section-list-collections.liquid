@@ -1,0 +1,57 @@
+{% comment %}
+  This page represents the /collections and /products pages.
+{% endcomment %}
+
+<div class="">
+  <h1 class="visually-hidden">{{ page_title }}</h1>
+
+  {% for block in section.blocks %}
+    {% case block.type %}
+    {% when 'featured_collection' %}
+      {%- assign collection = block.settings.collection -%}
+      <div class="collection-row container">
+        <div class="collection-row__info">
+          <h2 class="hd-34">
+            <a href="{{ collection.url }}" title="{{ 'collections.general.link_title' | t: title: title }}">{{ collection.title }}</a>
+          </h2>
+          <a href="{{ collection.url }}" title="{{ 'collections.general.link_title' | t: title: title }}" class="cta-link hide-mobile">{{ section.settings.view_all | default: 'View All' }}</a>
+
+        </div>
+        {% for product in collection.products limit: 4 %}
+          {%- include 'product-card', product_card_product: product -%}
+        {% endfor %}
+        <a href="{{ collection.url }}" title="{{ 'collections.general.link_title' | t: title: title }}" class="cta-link show-mobile">{{ section.settings.view_all | default: 'View All' }}</a>
+      </div>
+    {% endcase %}
+  {% endfor %}
+
+
+</div>
+
+
+{% schema %}
+{
+  "name": "Collections List",
+  "settings": [
+    {
+      "type": "text",
+      "id": "view_all",
+      "label": "View All Text"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "featured_collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "id": "collection",
+          "type": "collection",
+          "label": "Collection"
+        }
+
+      ]
+    }
+  ]
+}
+{% endschema %}

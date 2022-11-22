@@ -1,0 +1,9 @@
+
+  <div class="pagination container padded">
+    <a href="{{ paginate.previous.url }}" class="{% unless paginate.previous.is_link %}disabled{% endunless %}">
+      <span class="icon">&lt;</span> Previous
+    </a>
+    <a href="{{ paginate.next.url }}" class="{% unless paginate.next.is_link %}disabled{% endunless %}">
+      Next <span class="icon">&gt;</span>
+    </a>
+  </div>

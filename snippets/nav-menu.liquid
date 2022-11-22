@@ -1,0 +1,49 @@
+<nav role="navigation">
+  <ul>
+    {% for link in linklists[current_linklist].links %}
+      {% if link.links != blank %}
+        <li {% if link.active %}class="current"{% endif %}>
+          <a href="{{ link.url }}" class="main-link">{{ link.title | escape }}</a>
+          <ul class="secondary-menu ">
+            {% for childlink in link.links %}
+              {% if childlink.links != blank %}
+                <li>
+                  <a href="{{ childlink.url }}" class="{% if childlink.active %}childlink__active{% endif %} {% if location == 'main' %}js-open-subcollection-flyout open-subcollection-flyout{% endif %}" {% if location == 'main' %}data-nav-collection="{{ childlink.object.handle }}"{% endif %}>
+                    {{ childlink.title | escape }}
+                    {%- if location == 'main' -%}
+                      <span class="icon-plus show-mobile"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15"><g stroke="currentColor" fill="none" fill-rule="evenodd" stroke-linecap="square"><path d="M1.395 8h14.21M8.5.5v14"/></g></svg></span>
+                    {%- endif -%}
+                  </a>
+                  {%- if location == 'main' -%}
+                  <div class="subcollection-flyout">
+                    <div class="cols-1-2">
+                  {%- endif -%}
+                      <ul>
+                        {% for grandchildlink in childlink.links %}
+                          <li>
+                            <a href="{{ grandchildlink.url }}">{{ grandchildlink.title | escape }}</a>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                      {%- if location == 'main' -%}
+                        <div class="subcollection-flyout__products cols-3 hide-mobile"></div>
+                    </div>
+                  </div>
+                  {%- endif -%}
+                </li>
+              {% else %}
+                <li>
+                  <a href="{{ childlink.url }}"  {% if childlink.active %}class="childlink__active"{% endif %}>{{ childlink.title | escape }}</a>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </li>
+      {% else %}
+        <li {% if link.active %}class="current"{% endif %}>
+          <a href="{{ link.url }}" class="main-link">{{ link.title | escape }}</a>
+        </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+</nav>

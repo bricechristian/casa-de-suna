@@ -1,0 +1,95 @@
+<div class="page-account container account-dashboard">
+  <header class="split-aligner">
+    <h1 class="hd-2">{{ 'customer.account.title' | t }}</h1>
+
+  </header>
+  <div class="cols-2-1">
+    <div class="orders">
+      <div class="inner">
+        <h2>{{ 'customer.orders.title' | t }}</h2>
+
+        {% paginate customer.orders by 20 %}
+          {% if customer.orders.size != 0 %}
+            {% for order in customer.orders %}
+              <div class="order-accordion" data-order-accordion="{{ order.name }}">
+                <button class="order-accordion-header" js-order-accordion-header>
+                  <span class="order-accordion-heade__title">Order {{ order.name }}</span>
+                  <span>{% include 'icon-arrow-down' %}</span> 
+                </button>
+                <div class="responsive-table-row order-accordion-content" js-order-accordion-content>
+                  <div class="order-accordion-content__row">
+                    <p class="order-accordion-content__label">{{ 'customer.orders.order_number' | t }}</p>
+                    <p>{{ order.name | link_to: order.customer_url }}</p>
+                  </div>
+                  <div class="order-accordion-content__row">
+                    <p class="order-accordion-content__label">{{ 'customer.orders.date' | t }}</p>
+                    <p>{{ order.created_at | date: format: 'month_day_year' }}</p>
+                  </div>
+                  <div class="order-accordion-content__row">
+                    <p class="order-accordion-content__label">{{ 'customer.orders.payment_status' | t }}</p>
+                    <p>{{ order.financial_status_label }}</p>
+                  </div>
+                  <div class="order-accordion-content__row">
+                    <p class="order-accordion-content__label">{{ 'customer.orders.fulfillment_status' | t }}</p>
+                    <p>{{ order.fulfillment_status_label }}</p>
+                  </div>
+                  <div class="order-accordion-content__row">
+                    <p class="order-accordion-content__label">{{ 'customer.orders.total' | t }}</p>
+                    <p>{{ order.total_price | money }}</p>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+            {% comment %} <table class="responsive-table">
+              <thead>
+                <tr>
+                  <th>{{ 'customer.orders.order_number' | t }}</th>
+                  <th>{{ 'customer.orders.date' | t }}</th>
+                  <th>{{ 'customer.orders.payment_status' | t }}</th>
+                  <th>{{ 'customer.orders.fulfillment_status' | t }}</th>
+                  <th>{{ 'customer.orders.total' | t }}</th>
+                </tr>
+              </thead>
+              
+              <tbody>
+                {% for order in customer.orders %}
+                  <div class="order-accordion" data-order-accordion="{{ order.name }}">
+                    <button class="order-accordion-header" js-order-accordion-header>
+                      <span class="order-accordion-heade__title">Order {{ order.name }}</span>
+                      <span>{% include 'icon-arrow-down' %}</span> 
+                    </button>
+                    <tr class="responsive-table-row order-accordion-content" js-order-accordion-content>
+                      <td data-label="{{ 'customer.orders.order_number' | t }}">{{ order.name | link_to: order.customer_url }}</td>
+                      <td data-label="{{ 'customer.orders.date' | t }}">{{ order.created_at | date: format: 'month_day_year' }}</td>
+                      <td data-label="{{ 'customer.orders.payment_status' | t }}">{{ order.financial_status_label }}</td>
+                      <td data-label="{{ 'customer.orders.fulfillment_status' | t }}">{{ order.fulfillment_status_label }}</td>
+                      <td data-label="{{ 'customer.orders.total' | t }}">{{ order.total_price | money }}</td>
+                    </tr>
+                  </div>
+                {% endfor %}
+              </tbody>
+            </table> {% endcomment %}
+          {% else %}
+            <p>{{ 'customer.orders.none' | t }}</p>
+          {% endif %}
+
+          {% if paginate.pages > 1 %}
+            {% include 'pagination' %}
+          {% endif %}
+
+        {% endpaginate %}
+      </div>
+    </div>
+
+    <div class="details">
+      <h2>{{ 'customer.account.details' | t }}</h2>
+      {{ customer.default_address | format_address }}
+      <div class="details__end-links">
+        <a href="/account/addresses" class="cta-link">{{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }})</a>
+        <br>
+        <a href="/account/logout" class="cta-link">Logout</a>
+      </div>
+    </div>
+  </div>
+
+</div>

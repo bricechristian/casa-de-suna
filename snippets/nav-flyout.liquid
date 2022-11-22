@@ -1,0 +1,96 @@
+
+<div class="js-close-flyouts flyout-nav-overlay"></div>
+<div class="flyout-nav" aria-expanded="false">
+  <button type="button" class="text-only js-close-flyout flyout-nav__close">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 20"><g stroke="#000" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="square"><path d="M22.455 18.762 1.585 1.251M1.585 18.762l20.87-17.511"/></g></svg>
+    <span class="visually-hidden">Close</span>
+  </button>
+
+  <a href="/search" class="text-only js-open-search search-btn">
+    <svg aria-hidden="true" aria-role="presentation" class="nav-open-search" viewBox="0 0 21 20" xmlns="http://www.w3.org/2000/svg"><g transform="matrix(-1 0 0 1 20 1)" stroke="#FFF" stroke-width="1.5" fill="none" fill-rule="evenodd"><circle cx="11.5" cy="7" r="7"/><path stroke-linecap="square" d="M6.5 12l-6 6"/></g></svg>
+    <span class="visually-hidden">Search</span>
+  </a>
+  <div class="left-panel">
+    <div class="left-panel--main-links">
+      <ul>
+        {% for link in linklists[section.settings.flyout_menu].links %}
+          {% if link.links != blank %}
+            <li class="parent-link">
+              <a href="{{ link.url }}" data-related-submenu="{{ link.handle }}">
+                <span class="link--underlined">{{ link.title | escape }}</span>
+                <span class="icon-plus show-mobile"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15"><g stroke="currentColor" fill="none" fill-rule="evenodd" stroke-linecap="square"><path d="M1.395 8h14.21M8.5.5v14"/></g></svg></span>
+              </a>
+              <ul class="subcategory-menu">
+                <div class="cols-2-sm">
+                  {% for childlink in link.links %}
+                    <li class="caps--md">
+                      <a href="{{ childlink.url }}" class="link--underlined">{{ childlink.title | escape }}</a>
+                    </li>
+                  {% endfor %}
+                </div>
+              </ul>
+            </li>
+          {% else %}
+            <li  class="parent-link">
+              <a href="{{ link.url }}">
+                <span class="link--underlined">{{ link.title | escape }}</span>
+              </a>
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="end-links">
+      <div class="cols-2">
+        <div class="columns-2-sm-only">
+          {%- render 'nav-menu', current_linklist: section.settings.flyout_bottom_left_menu -%}
+          <div class="menu-nav-flyout-social-container external-links">
+            {%- render 'nav-menu', current_linklist: section.settings.social_menu -%}
+          </div>
+        </div>
+        <div>
+          {%- render 'nav-menu', current_linklist: section.settings.flyout_bottom_right_menu -%}
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="js-flyout-featured-panel flyout-featured-panel">
+    <?php
+      $args = array('orderby' => 'description', 'parent' => 0);
+      $categories = get_categories( $args );
+
+      foreach ($categories as $category) {
+        $category_link = get_category_link( $category->term_id );
+      ?>
+        <div class="js-featured-submenu featured-submenu" data-featured-submenu="<?php echo $category->term_id; ?>" aria-expanded="false">
+          <ul>
+            <?php
+            global $post;
+            $cat_id = $category->term_id;
+            $args = array(
+              'cat' => $cat_id,
+              'tag' => 'featured-nav',
+              'posts_per_page' => 2,
+            );
+            $featured_posts_list = new WP_Query($args);
+            if (! $featured_posts_list->have_posts() ) {
+              $args = array(
+                'cat' => $cat_id,
+                'posts_per_page' => 2,
+              );
+              $featured_posts_list = new WP_Query($args);
+            }
+            if( $featured_posts_list->have_posts() ):
+              while( $featured_posts_list->have_posts() ) : $featured_posts_list->the_post(); ?>
+               <?php hm_get_template_part( 'template-parts/post-thumb', [ 'className' => 'square-small' ] ); ?>
+            <?php
+              wp_reset_postdata();
+              endwhile; endif;
+            ?>
+          </ul>
+        </div>
+
+
+      <?php } ?>
+  </div> -->
+</div>

@@ -1,0 +1,102 @@
+<div class="collection-content container-lg">
+  {% paginate collection.products by 12 %}
+    <header class="collection__header show-mobile">
+      <h2 class="hd-3 collection__title">{{ collection.title }}</h2>
+    </header>
+    <div class="collection__cols">
+      <div class="collection__filters">
+        <div class="hide-mobile">
+          {%- unless section.settings.hide_top_navigation_menu == true -%}
+            {%- render 'nav-menu-collection' -%}
+          {%- else -%}
+            <h2 class="hd-3 collection__title">{{ collection.title }}</h2>
+          {%- endunless -%}
+        </div>
+
+        {% for block in section.blocks %}
+          {% case block.type %}
+          {% when 'filter_section' %}
+            <div class="filter-section">
+              <p class="hd-3">{{ block.settings.title}}</p>
+              {%- assign tags_array = block.settings.tag_list | split: ',' -%}
+              {%- for tag in tags_array -%}
+                <div class="checkbox-wrap">
+                  <input type="checkbox" name="{{ tag | handleize }}" id="{{ tag | handleize }}" class="collection-filter-checkbox visually-hidden">
+                  <label for="{{ tag | handleize }}">{{ tag }}</label>
+                </div>
+              {%- endfor -%}
+            </div>
+          {% endcase %}
+        {% endfor %}
+      </div>
+
+
+      <div>
+        <!-- ====== LOADING ICON ======== -->
+        <!-- <div class="js-loading-icon-row loading-icon-row container padded">
+          <div class="js-loading-icon-products loading-icon hide"  aria-hidden="true" tabindex="-1">
+            {%- render 'icon-loading' -%}
+          </div>
+        </div> -->
+
+        <!-- ======================================
+        PRODUCT LIST
+        =========================================== -->
+        <div class="js-product-list product-grid cols-4 cols-2-sm">
+          {% for product in collection.products %}
+            {%- render 'product-card', product_card_product: product -%}
+          {% else %}
+            <p>{{ 'collections.general.no_matches' | t }}</p>
+          {% endfor %}
+        </div>
+
+        {% if paginate.pages > 1 %}
+          {% render 'pagination' %}
+        {% endif %}
+      </div>
+    </div>
+  {% endpaginate %}
+
+</div>
+
+
+{% schema %}
+{
+  "name": "Collection Filtering",
+  "class": "collection-filtering",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "hide_top_navigation_menu",
+      "label": "Hide Top Sidebar Menu",
+      "default": false,
+      "info": "Hide top sidebar menu with subcollections"
+    },
+    {
+      "type": "link_list",
+      "id": "top_navigation",
+      "label": "Default Sidebar Top Menu"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "filter_section",
+      "name": "Filter Section",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading"
+        },
+        {
+          "type": "textarea",
+          "id": "tag_list",
+          "label": "Tag List",
+          "default": "Our Pick, Our Line",
+          "info": "Add a comma-separated list of tag names. Use exact tag names you added to products. "
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

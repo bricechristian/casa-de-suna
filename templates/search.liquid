@@ -1,0 +1,67 @@
+<script src="{{ 'search.js' | asset_url }}" defer="defer"></script>
+
+<section class="container page-search">
+    {% paginate search.results by 15 %}
+
+    <div class="search-form">
+        <form action="/search" method="get" role="search" class="js-search-form" data-selected-type="Products">
+            <div class="search-form__search-icon-wrap">
+                {% include 'icon-search' %}
+            </div>
+            <label for="Search" class="label-hidden">
+        {{ 'general.search.placeholder' | t }}
+      </label>
+            <div class="input-wrapper">
+                <input type="search" name="q" id="Search" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}">
+                <div class="type-of-search">
+
+                    <div class="type-of-search__placeholder type-of-search__item">
+                        <button type="button" class="js-open-type-dropdown selected-text text-only" aria-label="open type selection dropdown"><span class="caps--md">Products</span></button>
+                        <div class="icon-caret-down">
+                            {% render 'icon-caret-down' %}
+                        </div>
+                    </div>
+                    <div class="type-of-search__dropdown">
+                        <button type="button" class="js-select-search-type type-of-search__item text-only " data-type="Articles">
+             <span class="caps--md ">Articles</span>
+           </button>
+                        <button type="button" class="js-select-search-type type-of-search__item text-only selected" data-type="Products">
+             <span class="caps--md">Products</span>
+           </button>
+                        <button type="button" class="js-select-search-type type-of-search__item text-only" data-type="Recipes">
+             <span class="caps--md">Recipes</span>
+           </button>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn--beige">
+        Search
+      </button>
+        </form>
+    </div>
+
+
+    {% if search.performed %}
+    <div class="search-results-count caps--md">
+        {{ search.results_count }} {% if search.results_count > 1 %}Results{% else %}Result{% endif %}
+    </div>
+    <ul data-section-id="{% if section.id %}{{section.id}}{% endif %}" data-sectionId="{% if section.id %}{{section.id}}{% endif %}" {% if section.blocks %}data-blocks='{ {%- capture blocks_json -%}{% for block in section.blocks %}{%- capture block_json -%}"{{ block.type }}":{{ block.settings | json }}{%- endcapture -%}{{ block_json | prepend: ","  }}{% endfor %}{%- endcapture -%}{{ blocks_json | remove_first: "," }} }'
+        {% endif %} data-settings='{% if section.settings %}{{section.settings | json}}{% endif %}' id="gf-products" class="cols-4 product-grid cols-2-sm">
+        {% for item in search.results %}
+        <li>
+            {% if item.object_type == 'product' %} {% render 'product-card', product_card_product: item %} {% else %} {% assign featured_image = item.image | default: item.featured_image %} {% if featured_image != blank %}
+            <a href="{{ item.url | within: collection }}" title="{{ item.title | escape }}">
+                  {{ featured_image | img_url: '240x240' | img_tag: featured_image.alt }}
+                </a> {% endif %}
+
+            <h5>{{ item.title | link_to: item.url }}</h5>
+            <p>{{ item.content | strip_html | truncatewords: 50 }}</p>
+            {% endif %}
+
+        </li>
+        {% endfor %}
+    </ul>
+
+    {% if paginate.pages > 1 %} {% include 'pagination' %} {% endif %} {% endif %} {% endpaginate %}
+
+</section>

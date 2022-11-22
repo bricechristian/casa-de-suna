@@ -1,0 +1,79 @@
+<div class="cart-inner">
+  <div class="top-row">
+    <h2 class="hd-1"><em>Your</em> Cart</h2>
+    {%- if location == 'cart_drawer' -%}
+      <button class=" js-close-cart close-cart-btn text-only" type="button">
+        {% render 'icon-close' %}
+      </button>
+    {%- endif -%}
+  </div>
+  <div class="cart__headings caps--lg" data-cart-view="data-cart-view" rv-show="cart.item_count | gt 1">
+    <p></p>
+    <p>Quantity</p>
+    <p>Price</p>
+    <p>Subtotal</p>
+  </div>
+  <main data-cart-view="data-cart-view">
+    <div class="cart-product-wrap" rv-each-item="cart.items">
+      <div class="inner">
+        <div class="cart-image">
+          <a rv-href="item.url">
+            <img rv-src="item.image | productImageSize '220x260_crop_center'" src="">
+          </a>
+        </div>
+        <div class="info-col">
+          <div class="title-quantity">
+            <h3 class="cart-title split-aligner" >
+              <a rv-href="item.url">
+                <span rv-text="item.product_title"></span>
+                <div class="caps--sm cart__variant-title" rv-text="item.variant_title"></div>
+              </a>
+            </h3>
+            <div class="cart-quantity caps--md">
+              <a href="#" rv-data-cart-quantity="item.quantity | minus 1" rv-data-cart-update="index | plus 1" aria-label="remove one">&ndash;</a>
+              <span rv-text="item.quantity" aria-label="quantity"></span>
+              <a href="#" rv-data-cart-quantity="item.quantity | plus 1" rv-data-cart-update="index | plus 1" aria-label="Add One">+</a>
+            </div>
+            <a href="#" class="cart__remove caps--sm" rv-data-cart-remove="index | plus 1">
+              Remove
+            </a>
+          </div>
+          <div class="price-remove-row">
+            <span class="cart__price" rv-html="item.price | money Currency.currentCurrency" aria-label="Price"></span>
+            <span class="cart__subtotal" rv-html="item.line_price | money Currency.currentCurrency" aria-label="Subtotal"></span>
+            <a href="#" class="cart__remove caps--sm" rv-data-cart-remove="index | plus 1">
+              Remove
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+    {% comment %}
+    {% if settings.cart_notes_enable %}
+      <div class="order-notes" rv-show="cart.item_count | gt 0">
+          <textarea id="CartSpecialInstructions" class="js-cart-drawer-order-notes" name="note" placeholder="Order Notes">{{ cart.note }}</textarea>
+      </div>
+    {% endif %}
+    {% endcomment %}
+
+    <div class="empty-cart" rv-show="cart.item_count | lt 1">
+      <p>Your cart is currently empty.</p>
+      <a href="{{ routes.account_login_url }}" class="cta-link cart-link--block">Login</a>
+      <a href="/collections/all" class="cta-link">Start Shopping</a>
+    </div>
+
+  </main>
+  <div class="footer-content" data-cart-view="data-cart-view" rv-show="cart.item_count | gt 0">
+    <div class="inner">
+      <div class="cart-total-row split-aligner">
+        <p>Subtotal:</p><p rv-html="cart.total_price | money Currency.currentCurrency"></p>
+      </div>
+      <a href="/collections/all" class="caps--md continue-link">Continue Shopping</a>
+      <a class="btn btn--beige" href="/checkout">Checkout</a>
+      <div class="shipping-note">Shipping & taxes calculated at checkout</div>
+    </div>
+  </div>
+</div>

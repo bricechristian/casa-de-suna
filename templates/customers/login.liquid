@@ -1,0 +1,113 @@
+<div class="page-account container">
+  <div class="inner">
+    <div class="form-success hide" id="ResetSuccess">
+      {{ 'customer.recover_password.success' | t }}
+    </div>
+
+    <div id="CustomerLoginForm">
+      {% form 'customer_login' %}
+        <h1 class="hd-2">{{ 'customer.login.sign_in' | t }}</h1>
+
+        {{ form.errors | default_errors }}
+
+        <label for="CustomerEmail" class="label-hidden">
+          {{ 'customer.login.email' | t }}
+        </label>
+        <input type="email"
+               name="customer[email]"
+               id="CustomerEmail"
+               class="{% if form.errors contains 'email' %}input-error{% endif %}"
+               placeholder="{{ 'customer.login.email' | t }}"
+               spellcheck="false"
+               autocomplete="off"
+               autocapitalize="off"
+               autofocus>
+
+        {% if form.password_needed %}
+          <label for="CustomerPassword" class="label-hidden">
+            {{ 'customer.login.password' | t }}
+          </label>
+          <input type="password"
+                 name="customer[password]"
+                 id="CustomerPassword"
+                 class="{% if form.errors contains 'password' %}input-error{% endif %}"
+                 placeholder="{{ 'customer.login.password' | t }}">
+        {% endif %}
+
+        <button type="submit" class="btn btn--blush">Login</button>
+
+        <div class="end-links">
+          <a href="/account/register" class="cta-link md-cta-link">
+            {{ 'customer.login.register_cta' | t }}
+          </a>
+          <br>
+
+          {% if form.password_needed %}
+            <a href="#recover"  class="cta-link md-cta-link" id="RecoverPassword">{{ 'customer.login.forgot_password' | t }}</a>
+          {% endif %}
+        </div>
+
+      {% endform %}
+
+    </div>
+
+    <div id="RecoverPasswordForm" class="hide reset-password">
+      <h2 class="hd-2">{{ 'customer.recover_password.title' | t }}</h2>
+
+
+      {% form 'recover_customer_password' %}
+        {{ form.errors | default_errors }}
+
+        {% if form.posted_successfully? %}
+          <span class="hide reset-password-success"></span>
+        {% endif %}
+
+        <label for="RecoverEmail" class="label-hidden">
+          {{ 'customer.recover_password.email' | t }}
+        </label>
+        <input type="email"
+               name="email"
+               id="RecoverEmail"
+               placeholder="{{ 'customer.recover_password.email' | t }}"
+               spellcheck="false"
+               autocomplete="off"
+               autocapitalize="off">
+
+       <div class="desc">
+         <p>{{ 'customer.recover_password.subtext' | t }}</p>
+       </div>
+
+        <button type="submit" class="btn btn--blush">{{ 'customer.recover_password.submit' | t }}</button>
+
+
+      {% endform %}
+      <div class="end-links">
+        <button type="button" class="cta-link md-cta-link" id="HideRecoverPasswordLink">
+          {{ 'customer.login.sign_in_cta' | t }}
+        </button>
+        <br>
+        <a href="/account/register" class="cta-link md-cta-link">
+          {{ 'customer.login.register_cta' | t }}
+        </a>
+      </div>
+    </div>
+
+    {% if shop.checkout.guest_login %}
+      <h2>{{ 'customer.login.guest_title' | t }}</h2>
+
+      {% form 'guest_login' %}
+        <input type="submit" class="btn" value="{{ 'customer.login.guest_continue' | t }}">
+      {% endform %}
+    {% endif %}
+  </div>
+</div>
+
+
+<script type="module">
+  var url_string = window.location.href
+  var url = new URL(url_string);
+  var pageName = url.searchParams.get("page");
+  if (pageName == 'wishlist') {
+    $('#CustomerLoginForm form').prepend(' <input type="hidden" name="checkout_url" value="/pages/wishlist"> ');
+  }
+</script>

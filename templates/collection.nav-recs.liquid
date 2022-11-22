@@ -1,0 +1,4 @@
+{%- layout none -%}
+{%- for product in collection.products limit: 3 -%}
+  {% render 'product-card', product_card_product: product %}
+{%- endfor -%}

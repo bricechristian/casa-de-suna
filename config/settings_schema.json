@@ -1,0 +1,272 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Slate",
+    "theme_version": "0.11.0",
+    "theme_author": "Shopify",
+    "theme_documentation_url": "https:\/\/shopify.github.io\/slate\/",
+    "theme_support_url": "https:\/\/github.com\/Shopify\/slate"
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "select",
+        "id": "type_base_size",
+        "label": "Base size",
+        "default": "16px",
+        "options": [
+          {
+            "value": "14px",
+            "label": "14px"
+          },
+          {
+            "value": "15px",
+            "label": "15px"
+          },
+          {
+            "value": "16px",
+            "label": "16px"
+          },
+          {
+            "value": "17px",
+            "label": "17px"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "header",
+        "content": "General colors"
+      },
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "Primary color",
+        "default": "#000",
+        "info": "Used for text links, and primary buttons"
+      },
+      {
+        "type": "color",
+        "id": "color_body_text",
+        "label": "Text color",
+        "default": "#000",
+        "info": "Color used for content and paragraph text"
+      }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Social sharing options"
+      },
+      {
+        "type": "checkbox",
+        "id": "social_sharing_blog",
+        "label": "Enable sharing for blog articles",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "share_facebook",
+        "label": "Share on Facebook",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "share_twitter",
+        "label": "Tweet on Twitter",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "share_pinterest",
+        "label": "Pin on Pinterest",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Sharing links"
+      },
+      {
+        "type": "text",
+        "id": "social_twitter_link",
+        "label": "Twitter link"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook_link",
+        "label": "Facebook link"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest_link",
+        "label": "Pinterest link"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram_link",
+        "label": "Instagram link"
+      },
+      {
+        "type": "text",
+        "id": "social_snapchat_link",
+        "label": "Snapchat link"
+      },
+      {
+        "type": "text",
+        "id": "social_tumblr_link",
+        "label": "Tumblr link"
+      },
+      {
+        "type": "text",
+        "id": "social_youtube_link",
+        "label": "Youtube link"
+      },
+      {
+        "type": "text",
+        "id": "social_vimeo_link",
+        "label": "Vimeo link"
+      }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "cart_notes_enable",
+        "label": "Enable cart notes",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon image",
+        "info": "Will be scaled down to 32 x 32px"
+      }
+    ]
+  },
+  {
+    "name": "App: Wishlist King",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Styling & Customisations",
+        "info": "Please note: Wishlist King is 100% customisable to integrate seamlessly with any theme. If you need customisations beyond what you can change below, please get in touch: support@appmate.io"
+      },
+      {
+        "type": "checkbox",
+        "id": "app_wk_enabled",
+        "label": "Enable Wishlist King",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "app_wk_login_required",
+        "label": "Customer Login Required",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "app_wk_icon",
+        "label": "Wishlist Icon",
+        "info": "Choose between Heart or Star icon. For your own custom icon, please contact support@appmate.io",
+        "options": [
+          {
+            "value": "heart",
+            "label": "Heart"
+          },
+          {
+            "value": "star",
+            "label": "Star"
+          }
+        ],
+        "default": "heart"
+      },
+      {
+        "type": "header",
+        "content": "Button - Collection"
+      },
+      {
+        "type": "select",
+        "id": "app_wk_col_bg_shape",
+        "label": "Button Shape",
+        "options": [
+          {
+            "value": "square",
+            "label": "Square"
+          },
+          {
+            "value": "circle",
+            "label": "Circle"
+          },
+          {
+            "value": "none",
+            "label": "No Background"
+          }
+        ],
+        "default": "square"
+      },
+      {
+        "type": "header",
+        "content": "Wishlist Page"
+      },
+      {
+        "type": "select",
+        "id": "app_wk_share_position",
+        "label": "Share Wishlist Position",
+        "options": [
+          {
+            "value": "top",
+            "label": "Top"
+          },
+          {
+            "value": "bottom",
+            "label": "Bottom"
+          },
+          {
+            "value": "hidden",
+            "label": "Hidden"
+          }
+        ],
+        "default": "top"
+      },
+      {
+        "type": "select",
+        "id": "app_wk_products_per_row",
+        "label": "Products per Row",
+        "options": [
+          {
+            "value": "3",
+            "label": "3"
+          },
+          {
+            "value": "4",
+            "label": "4"
+          },
+          {
+            "value": "5",
+            "label": "5"
+          },
+          {
+            "value": "6",
+            "label": "6"
+          }
+        ],
+        "default": "4"
+      }
+    ]
+  }
+]

@@ -1,0 +1,38 @@
+<div role="navigation" class="collection-nav">
+  <ul>
+    {% for link in linklists[section.settings.top_navigation].links %}
+      {% if link.links != blank %}
+        <li class="{% if link.active %}show-main-menu{% endif %}">
+          <a href="{{ link.url }}" class="hd-3 collection__title collection-nav__parent ">{{ link.title | escape }}</a>
+          <ul>
+            {% for childlink in link.links %}
+              {% if childlink.links != blank %}
+                <li class="collection-nav__child {% if childlink.active %}show-nav-block{% endif %}">
+                  <a href="{{ childlink.url }}" class=" hd-3 collection__title">{{ childlink.title | escape }}</a>
+                  <ul>
+                    <li>
+                      <a href="{{ childlink.url }}" class="collection-nav__grandchild {% if childlink.active %}current-grandchild{% endif %}">All {{ childlink.title | escape }}</a>
+                    </li>
+                    {% for grandchildlink in childlink.links %}
+                      <li>
+                        <a href="{{ grandchildlink.url }}" class="collection-nav__grandchild {% if grandchildlink.active %}current-grandchild{% endif %}">{{ grandchildlink.title | escape }}</a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </li>
+              {% else %}
+                <li class="collection-nav__child {% if childlink.active %}show-nav-block{% endif %}">
+                  <a href="{{ childlink.url }}" class="hd-3 collection__title">{{ childlink.title | escape }}</a>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+</div>
+
+<script type="text/javascript" type="module">
+  $('.current-grandchild').closest('.collection-nav__child').addClass('show-nav-block')
+</script>

@@ -1,0 +1,33 @@
+<script type="text/javascript">
+  console.log('adtc script loaded');
+  $('[data-wk-move-to-cart]').on('submit', function (e) {
+    e.preventDefault();
+    console.log('CALLED');
+    {% comment %} var $form = $(this);
+    let variantId = $form.find('.js-variant-id').val();
+    let quantity = $form.find('.js-quantity').val();
+
+    CartJS.addItem(variantId, quantity, {}, {
+      // Define a success callback to display a success message.
+      "success": function(data, textStatus, jqXHR) {
+        $('body').addClass('open-cart');
+        console.log('added cart');
+      },
+      // Define an error callback to display an error message.
+      "error": function(jqXHR, textStatus, errorThrown) {
+          $form.append('<p>There was a problem adding to the cart!</p>')
+      }
+    }); {% endcomment %}
+
+
+  });
+
+  {% comment %} $('#quantity').on('change', function () {
+    var selectedQuantity = parseInt($(this).val(), 10);
+    var variantPrice = $('.js-price').data('raw-price');
+    var variantPriceTimesQuantity = selectedQuantity * variantPrice;
+    $('.js-price').html(slate.Currency.formatMoney(variantPriceTimesQuantity, theme.moneyFormat));
+  }); {% endcomment %}
+
+
+</script>

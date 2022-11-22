@@ -1,0 +1,146 @@
+<div class="product-card">
+  <div class="product-card__image-wrap">
+    <a href="{{ product_card_product.url | within: collection }}">
+      <div class="cropped-image-wrapper square">
+        {% if product_card_product.metafields.accentuate.product_card_image %}
+          {% assign featured_image = product_card_product.metafields.accentuate.product_card_image | first %}
+          <img
+            srcset="{% if featured_image.width >= 165 %}{{ featured_image.cloudinary_src | append: 'w_165' }} 165w,{% endif %}
+              {% if featured_image.width >= 360 %}{{ featured_image.cloudinary_src | append: 'w_360' }} 360w,{% endif %}
+              {% if featured_image.width >= 533 %}{{ featured_image.cloudinary_src | append: 'w_533' }} 533w,{% endif %}
+              {% if featured_image.width >= 720 %}{{ featured_image.cloudinary_src | append: 'w_720' }} 720w,{% endif %}
+              {% if featured_image.width >= 940 %}{{ featured_image.cloudinary_src | append: 'w_940' }} 940w,{% endif %}
+              {% if featured_image.width >= 1066 %}{{ featured_image.cloudinary_src | append: 'w_1066' }} 1066w,{% endif %}"
+            sizes="(min-width: 750px) calc((100vw - 8rem) / 4), calc((100vw - 3rem) / 2)"
+            src="{{ featured_image.cloudinary_src | append: 'w_313' }}"
+            loading="lazy"
+            width="{{ featured_image.width }}"
+            height="{{ featured_image.height }}"
+            alt="{{ featured_image.alt | escape }}" >
+
+          {%- if product_card_product.metafields.accentuate.product_card_hover_image -%}
+            {% assign hover_image = product_card_product.metafields.accentuate.product_card_hover_image | first %}
+            <img
+              srcset="{% if hover_image.width >= 165 %}{{ hover_image.cloudinary_src | append: 'w_165' }} 165w,{% endif %}
+                {% if hover_image.width >= 360 %}{{ hover_image.cloudinary_src | append: 'w_360' }} 360w,{% endif %}
+                {% if hover_image.width >= 533 %}{{ hover_image.cloudinary_src | append: 'w_533' }} 533w,{% endif %}
+                {% if hover_image.width >= 720 %}{{ hover_image.cloudinary_src | append: 'w_720' }} 720w,{% endif %}
+                {% if hover_image.width >= 940 %}{{ hover_image.cloudinary_src | append: 'w_940' }} 940w,{% endif %}
+                {% if hover_image.width >= 1066 %}{{ hover_image.cloudinary_src | append: 'w_1066' }} 1066w,{% endif %}"
+              sizes="(min-width: 750px) calc((100vw - 8rem) / 4), calc((100vw - 3rem) / 2)"
+              src="{{ hover_image.cloudinary_src | append: 'w_313' }}"
+              loading="lazy"
+              width="{{ hover_image.width }}"
+              height="{{ hover_image.height }}"
+              alt="{{ hover_image.alt | escape }}" >
+          {%- endif -%}
+
+
+        {% elsif product_card_product.featured_image != blank %}
+          <img
+            srcset="{%- if product_card_product.featured_image.width >= 165 -%}{{ product_card_product.featured_image | img_url: '165x' }} 165w,{%- endif -%}
+              {%- if product_card_product.featured_image.width >= 360 -%}{{ product_card_product.featured_image | img_url: '360x' }} 360w,{%- endif -%}
+              {%- if product_card_product.featured_image.width >= 533 -%}{{ product_card_product.featured_image | img_url: '533x' }} 533w,{%- endif -%}
+              {%- if product_card_product.featured_image.width >= 720 -%}{{ product_card_product.featured_image | img_url: '720x' }} 720w,{%- endif -%}
+              {%- if product_card_product.featured_image.width >= 940 -%}{{ product_card_product.featured_image | img_url: '940x' }} 940w,{%- endif -%}
+              {%- if product_card_product.featured_image.width >= 1066 -%}{{ product_card_product.featured_image | img_url: '1066x' }} 1066w{%- endif -%}"
+            src="{{ product_card_product.featured_image | img_url: '313px' }}"
+            sizes="(min-width: 750px) calc((100vw - 8rem) / 4), calc((100vw - 3rem) / 2)"
+            alt="{{ product_card_product.featured_image.alt | escape }}"
+            loading="lazy"
+            class="motion-reduce"
+            width="{{ product_card_product.featured_image.width }}"
+            height="{{ product_card_product.featured_image.height }}"
+          >
+
+          {%- if product_card_product.images[1] != nil -%}
+            <img
+              srcset="{%- if product_card_product.images[1].width >= 165 -%}{{ product_card_product.images[1] | img_url: '165x' }} 165w,{%- endif -%}
+                {%- if product_card_product.images[1].width >= 360 -%}{{ product_card_product.images[1] | img_url: '360x' }} 360w,{%- endif -%}
+                {%- if product_card_product.images[1].width >= 533 -%}{{ product_card_product.images[1] | img_url: '533x' }} 533w,{%- endif -%}
+                {%- if product_card_product.images[1].width >= 720 -%}{{ product_card_product.images[1] | img_url: '720x' }} 720w,{%- endif -%}
+                {%- if product_card_product.images[1].width >= 940 -%}{{ product_card_product.images[1] | img_url: '940x' }} 940w,{%- endif -%}
+                {%- if product_card_product.images[1].width >= 1066 -%}{{ product_card_product.images[1] | img_url: '1066x' }} 1066w{%- endif -%}"
+              src="{{ product_card_product.images[1] | img_url: '313px' }}"
+              sizes="(min-width: 750px) calc((100vw - 8rem) / 4), calc((100vw - 3rem) / 2)"
+              alt="{{ product_card_product.images[1].alt | escape }}"
+              loading="lazy"
+              class="motion-reduce"
+              width="{{ product_card_product.images[1].width }}"
+              height="{{ product_card_product.images[1].height }}"
+            >
+          {%- endif -%}
+
+        {% else %}
+            {{ 'product-6' | placeholder_svg_tag: 'placeholder-svg placeholder-svg--small' }}
+        {% endif %}
+
+      </div>
+      
+      <div class="product-card__wishlist">
+        <!-- include 'wishlist-button-product' with '{{ product.id }}' -->
+      </div>
+
+      {% if product_card_product.available == false %}
+        <span class="badge badge__sold-out">
+            Sold <br> Out
+        </span>
+      {% elsif product_card_product.compare_at_price > product_card_product.price %}
+        <span class="badge badge__sale">
+          Sale
+        </span>
+      {% elsif product_card_product.tags contains 'Our Line' %}
+        <span class="badge badge__our-line">
+          Our <br> Line
+        </span>
+      {% elsif product_card_product.tags contains 'Our Pick' %}
+        <span class="badge badge__our-pick">
+            Our <br> Pick
+        </span>
+      {% endif %}
+    </a>
+
+  </div>
+  <div class="product-card__info-wrap">
+    <p class="product-card__vendor">
+      {{ product_card_product.vendor }}
+    </p>
+    <p class="caps--lg product-card__title">
+      <a href="{{ product_card_product.url | within: collection }}">{{ product_card_product.title }}</a>
+    </p>
+    <p class="caps--sm product-card__price">
+      {% if product_card_product.compare_at_price > product_card_product.price %}
+
+        {% if product_card_product.price_varies %}
+          {%- assign sale_price = product_card_product.price | money_without_trailing_zeros -%}
+          <span class="visually-hidden">{{ 'products.product.on_sale_from_html' | t: price: sale_price }}</span>
+        {% else %}
+          <span class="visually-hidden">{{ 'products.product.on_sale' | t }}</span>
+          {{ product_card_product.price | money_without_trailing_zeros }}
+        {% endif %}
+
+      {% else %}
+
+        {% if product_card_product.price_varies %}
+          {{ product_card_product.price | money_without_trailing_zeros }} - {{ product_card_product.price_max | money_without_trailing_zeros }}
+        {% else %}
+          {{ product_card_product.price | money_without_trailing_zeros }}
+        {% endif %}
+
+      {% endif %}
+
+      {% if product_card_product.compare_at_price > product_card_product.price %}
+        <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
+        <s>{{ product_card_product.compare_at_price | money_without_trailing_zeros }}</s>
+      {% endif %}
+
+    </p>
+  </div>
+  {%- unless card_format == 'small' -%}
+    {% if product_card_product.available and product_card_product.variants.size > 1 %}
+      {% render 'swatch-color' for product_card_product.options as swatch, product: product_card_product %}
+    {% endif %}
+  {%- endunless -%}
+
+
+</div>

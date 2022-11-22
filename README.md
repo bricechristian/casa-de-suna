@@ -1,1 +1,1 @@
-# casa-de-suna
+# Casa de Suna Shopify Theme 

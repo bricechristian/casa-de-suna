@@ -50,9 +50,9 @@
       {% assign values = values | join: ',' %}
       {% assign values = values | append: ',' | append: value %}
       {% assign values = values | split: ',' %}
-      <div data-image="{{ variant.image | img_url:'master'}}" data-value="{{ value | escape }}" class="swatch-element {% if is_color %}color {% else %}text-swatch {% endif %}{{ value | handle }} {% if variant.available %}available{% else %}soldout{% endif %}">
+      <div data-image="{{ variant.image | img_url:'1500x'}}" data-value="{{ value | escape }}" class="swatch-element {% if is_color %}color {% else %}text-swatch {% endif %}{{ value | handle }} {% if variant.available %}available{% else %}soldout{% endif %}">
 <!--    {% unless variant.available %}disabled{% endunless %}     -->
-        <input id="swatch-{{ option_index }}-{{ value | handle }}" type="radio" name="option-{{ option_index }}" value="{{ value | escape }}"{% if forloop.first %} checked{% endif %}  />
+        <input id="swatch-{{ option_index }}-{{ value | handle }}" type="radio" name="option-{{ option_index }}" value="{{ value | escape }}"{% if product.selected_or_first_available_variant.title contains value %} checked{% endif %}  />
         {% if is_color %}
           <label for="swatch-{{ option_index }}-{{ value | handle }}" >
             <div class="color-swatch" style="background-color: {{ value | split: ' ' | last | handle }}; background-image: url({{ value | handle | append: '.' | append: file_extension | file_url }})"></div>

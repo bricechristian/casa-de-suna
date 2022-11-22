@@ -3,7 +3,7 @@
     {% for link in linklists[current_linklist].links %}
       {% if link.links != blank %}
         <li {% if link.active %}class="current"{% endif %}>
-          <a href="{{ link.url }}" class="main-link">{{ link.title | escape }}</a>
+          {%  comment %}<a href="{{ link.url }}" class="main-link">{{ link.title | escape }}</a>{% endcomment %}
           <ul class="secondary-menu ">
             {% for childlink in link.links %}
               {% if childlink.links != blank %}
